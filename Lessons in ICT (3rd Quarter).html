@@ -166,11 +166,24 @@
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         let audio = document.querySelector("audio");
-        if (audio) {
-            audio.volume = 0.5; // Adjust volume if needed
-            audio.muted = false; // Ensure it's not muted
-            audio.play().catch(error => console.log("Autoplay failed:", error));
+
+        if (!audio) {
+            console.error("Audio element not found! Make sure <audio> exists in your HTML.");
+            return;
         }
+
+        function playAudio() {
+            audio.muted = false;
+            audio.play().then(() => {
+                console.log("Audio is playing!");
+            }).catch(err => {
+                console.error("Playback error:", err);
+            });
+        }
+
+        // Play audio when user interacts (click or keypress)
+        document.body.addEventListener("click", playAudio);
+        document.body.addEventListener("keydown", playAudio);
     });
 </script>
 
